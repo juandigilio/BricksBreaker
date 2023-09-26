@@ -8,6 +8,7 @@ struct Player
 	Vector2 size;
 	Vector2 speed;
 	Vector2 textureSize;
+	int availableLives;
 	int texture;
 	int points;
 	int ammo;

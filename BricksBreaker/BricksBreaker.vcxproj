@@ -146,11 +146,14 @@ xcopy /y "$(SolutionDir)Assets\" "$(OutDir)"</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ColissionManager.cpp" />
+    <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameFunctions.cpp" />
     <ClCompile Include="GameLoop.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ColissionManager.h" />
     <ClInclude Include="Entities.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="GameFunctions.h" />

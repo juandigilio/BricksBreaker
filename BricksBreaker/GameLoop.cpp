@@ -5,13 +5,15 @@
 #include "sl.h"
 
 #include "GameFunctions.h"
+#include "ColissionManager.h"
 
 
 void SetEntities(Player& player, Ball& ball, Brick bricks[])
 {
 	player.size = { 100.0f, 100.0f };
 	player.textureSize = { player.size.x , -player.size.y };
-	player.position = { screenWidth * 0.5f, -20.0f };
+	player.position = { screenWidth * 0.5f, 50.0f };
+	player.availableLives = 3;
 	player.points = 0;
 	player.speed = { 0.0f, 0.0f };
 	player.texture = slLoadTexture("../Assets/Images/Ship.png");
@@ -25,7 +27,6 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 	ball.maxSpeed = 500.0f;
 	ball.texture = slLoadTexture("../Assets/Images/Enemy.png");
 
-
 	int image1 = slLoadTexture("../Assets/Images/brick1.png");
 	int image2 = slLoadTexture("../Assets/Images/brick2.png");
 	int image3 = slLoadTexture("../Assets/Images/brick3.png");
@@ -33,23 +34,22 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 	int image5 = slLoadTexture("../Assets/Images/brick5.png");
 	int image6 = slLoadTexture("../Assets/Images/brick6.png");
 
-
 	Vector2 position = { 90.0f, screenHeight - 50.0f };
 	int iterator = 0;
 	float brickSizeX = 60;
 	float brickSizeY = 17;
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 12; i++)
 	{
-		for (int j = 0; j < 14; j++)
+		for (int j = 0; j < 13; j++)
 		{
 			bricks[iterator].size.x = brickSizeX;
 			bricks[iterator].size.y = brickSizeY;
 			bricks[iterator].textureSize.x = brickSizeX;
 			bricks[iterator].textureSize.y = brickSizeY;
-
 			bricks[iterator].position = position;
-			position.x += bricks[iterator].size.x;
+
+			position.x += bricks[iterator].size.x + 10.0f;
 
 			int ran = (rand() % 6) + 1;
 
@@ -91,7 +91,7 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 		}
 
 		position.x = 90.0f;
-		position.y -= brickSizeY;
+		position.y -= brickSizeY + 10.0f;
 	}
 }
 
