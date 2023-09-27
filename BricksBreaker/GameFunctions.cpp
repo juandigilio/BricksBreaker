@@ -25,8 +25,10 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 	ball.textureSize.y = ball.radius * 2;
 	ball.position = { screenWidth * 0.5f, 50.0f };
 	ball.speed = { 250.0f, 250.0f };
-	ball.maxSpeed = 500.0f;
+	ball.maxSpeed = 800.0f;
 	ball.texture = Assets::ball;
+	ball.isAlive = true;
+	ball.isOut = false;
 
 
 	Vector2 position = { 90.0f, screenHeight - 50.0f };
@@ -87,9 +89,11 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 
 void LoadAssets()
 {
-	ballBoing = slLoadWAV("../Assets/Music/ball.wav");
+	ballBrick = slLoadWAV("../Assets/Music/ballBrick.wav");
+	//ballStart = slLoadWAV("../Assets/Music/ballStart.wav");
+	//ballWall = slLoadWAV("../Assets/Music/ballWall.wav");
 	missBall = slLoadWAV("../Assets/Music/missBall.wav");
-	powerUp = slLoadWAV("../Assets/Music/powerUp.wav");
+	//powerUp = slLoadWAV("../Assets/Music/powerUp.wav");
 	rLaunch = slLoadWAV("../Assets/Music/rLaunch.wav");
 	explosion = slLoadWAV("../Assets/Music/explosion.wav");
 
@@ -101,4 +105,11 @@ void LoadAssets()
 	brick3 = slLoadTexture("../Assets/Images/brick3.png");
 	brick4 = slLoadTexture("../Assets/Images/brick4.png");
 	brick5 = slLoadTexture("../Assets/Images/brick5.png");
+}
+
+void InitGame(Player& player, Ball& ball, Brick bricks[])
+{
+	LoadAssets();
+
+	SetEntities(player, ball, bricks);
 }

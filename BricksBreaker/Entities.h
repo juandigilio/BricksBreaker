@@ -24,6 +24,7 @@ struct Ball
 	float radius;
 	float maxSpeed;
 	bool isAlive;
+	bool isOut;
 };
 
 struct Brick

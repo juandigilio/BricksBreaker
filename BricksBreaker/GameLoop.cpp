@@ -89,7 +89,7 @@ void StartUp()
 	Brick bricks[bricksQnty];
 	Ball ball = Ball();
 
-	SetEntities(player, ball, bricks);
+	InitGame(player, ball, bricks);
 
 	Loop(ball, player, bricks);
 

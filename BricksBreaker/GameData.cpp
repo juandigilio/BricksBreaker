@@ -14,7 +14,9 @@ namespace Colission
 
 namespace Assets
 {
-	extern int ballBoing{};
+	extern int ballBrick{};
+	extern int ballStart{};
+	extern int ballWall{};
 	extern int missBall{};
 	extern int powerUp{};
 	extern int rLaunch{};
