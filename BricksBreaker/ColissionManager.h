@@ -2,4 +2,4 @@
 
 #include "Entities.h"
 
-void CheckColissions(Ball& ball, Player& player, Brick bricks[]);
+void CheckColissions(Player& player, Ball& ball, Brick bricks[]);

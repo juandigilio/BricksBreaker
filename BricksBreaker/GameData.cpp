@@ -14,6 +14,7 @@ namespace Colission
 
 namespace Assets
 {
+	//sounds
 	extern int ballBrick{};
 	extern int ballStart{};
 	extern int ballWall{};
@@ -23,6 +24,10 @@ namespace Assets
 	extern int explosion{};
 	extern int danger{};
 
+	//Assets
+	extern int menuBackground{};
+
+	extern int gameBackground{};
 	extern int player{};
 	extern int ball{};
 	
@@ -31,4 +36,24 @@ namespace Assets
 	extern int brick3{};
 	extern int brick4{};
 	extern int brick5{};
+
+	extern int acidBrick{};
+	extern int acidPosX{};
+	extern int acidPosY{};
+	extern int iceBrick{};
+	extern int icePosX{};
+	extern int icePosY{};
+	extern int bigBrick{};
+	extern int bigPosX{};
+	extern int bigPosY{};
+	extern int stoneBrick{};
+	extern int stonePosX{};
+	extern int stonePosY{};
+
+	extern int menuSizeX{};
+	extern int menuSizeY{};
+
+
+	//Fonts
+	extern int menuFont{};
 }

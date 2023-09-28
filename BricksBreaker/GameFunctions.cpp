@@ -13,11 +13,12 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 {
 	player.size = { 100.0f, 100.0f };
 	player.textureSize = { player.size.x , -player.size.y };
-	player.position = { screenWidth * 0.5f, 50.0f };
+	player.position = { screenWidth * 0.5f, 0.0f };
 	player.availableLives = 3;
 	player.points = 0;
 	player.speed = { 0.0f, 0.0f };
 	player.texture = Assets::player;
+	player.isAlive = true;
 
 
 	ball.radius = 8.0f;
@@ -35,6 +36,8 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 	int iterator = 0;
 	float brickSizeX = 60;
 	float brickSizeY = 17;
+
+	srand(NULL);
 
 	for (int i = 0; i < 12; i++)
 	{
@@ -90,13 +93,14 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 void LoadAssets()
 {
 	ballBrick = slLoadWAV("../Assets/Music/ballBrick.wav");
-	//ballStart = slLoadWAV("../Assets/Music/ballStart.wav");
+	ballStart = slLoadWAV("../Assets/Music/ballStart.wav");
 	//ballWall = slLoadWAV("../Assets/Music/ballWall.wav");
 	missBall = slLoadWAV("../Assets/Music/missBall.wav");
 	//powerUp = slLoadWAV("../Assets/Music/powerUp.wav");
 	rLaunch = slLoadWAV("../Assets/Music/rLaunch.wav");
 	explosion = slLoadWAV("../Assets/Music/explosion.wav");
-
+	
+	gameBackground = slLoadTexture("../Assets/Images/gameBackground.png");
 	player = slLoadTexture("../Assets/Images/Ship.png");
 	ball = slLoadTexture("../Assets/Images/Enemy.png");
 

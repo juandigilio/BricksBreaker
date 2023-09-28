@@ -7,9 +7,10 @@
 #include "GameFunctions.h"
 #include "ColissionManager.h"
 
+using namespace Assets;
 
 
-void GetInput(Player& player)
+void GetInput(Player& player, Ball& ball, Brick bricks[], GameSceen& currentSceen)
 {
 	if (slGetKey(SL_KEY_LEFT))
 	{
@@ -19,33 +20,48 @@ void GetInput(Player& player)
 	{
 		player.speed.x = 500.0f;
 	}
+	else if (slGetKey(SL_KEY_TAB))
+	{
+		player.textureSize.y++;
+	}
+	else if (slGetKey(SL_KEY_ESCAPE))
+	{
+		currentSceen = MENU;
+	}
 	else
 	{
 		player.speed.x = 0.0f;
 	}
 
+	if (!player.isAlive)
+	{
+		InitGame(player, ball, bricks);
+		currentSceen = MENU;
+	}
+}
+
+void MoveEntities(Player& player, Ball& ball)
+{
+	player.position.x += player.speed.x * slGetDeltaTime();
+	player.position.y += player.speed.y * slGetDeltaTime();
+
 	if (player.position.x < 0.0f + (player.size.x / 2))
 	{
 		player.position.x = 0.0f + (player.size.x / 2);
 	}
-
-	if (player.position.x > screenWidth - (player.size.x / 2))
+	else if (player.position.x > screenWidth - (player.size.x / 2))
 	{
 		player.position.x = screenWidth - (player.size.x / 2);
 	}
-}
-
-void Move(Player& player, Ball& ball)
-{
-	player.position.x += player.speed.x * slGetDeltaTime();
-	player.position.y += player.speed.y * slGetDeltaTime();
 
 	ball.position.x += ball.speed.x * slGetDeltaTime();
 	ball.position.y += ball.speed.y * slGetDeltaTime();
 }
 
-void Draw(Ball& ball, Player& player, Brick bricks[])
+void Draw(Player& player, Ball& ball, Brick bricks[])
 {
+	slSprite(gameBackground, screenWidth / 2, screenHeight / 2, screenWidth * 1.8, screenHeight * 1.5f);
+
 	for (int i = 0; i < bricksQnty; i++)
 	{
 		if (bricks[i].isAlive)
@@ -57,41 +73,37 @@ void Draw(Ball& ball, Player& player, Brick bricks[])
 
 	slSprite(ball.texture, ball.position.x, ball.position.y, ball.textureSize.x, ball.textureSize.y);
 	slSprite(player.texture, player.position.x, player.position.y, player.textureSize.x, player.textureSize.y);
+	slSprite(player.texture, player.position.x, player.position.y, player.textureSize.x, player.textureSize.y);
 }
 
-void Loop(Ball& ball, Player& player, Brick bricks[])
+void Update(Player& player, Ball& ball, Brick bricks[])
 {
-	while (!slShouldClose() && !slGetKey(SL_KEY_ESCAPE))
+	if (player.firstTime)
 	{
-		if (slGetKey(SL_KEY_TAB))
-		{
-			player.textureSize.y++;
-		}
+		slSoundPlay(ballStart);
+		player.firstTime = false;
+	}
 
-		GetInput(player);
-		CheckColissions(ball, player, bricks);
-		Move(player, ball);
+	CheckColissions(player, ball, bricks);
 
-		slSetBackColor(0.1, 0.1, 0.1);
-		Draw(ball, player, bricks);
-
-		slRender();
-	}	
+	MoveEntities(player, ball);
 }
 
-void StartUp()
+void GameLoop(Player& player, Ball& ball, Brick bricks[], GameSceen& currentSceen)
+{	
+	GetInput(player, ball, bricks, currentSceen);
+
+	Update(player, ball, bricks);
+
+	Draw(player, ball, bricks);	
+}
+
+void Play(Player& player, Ball& ball, Brick bricks[], GameSceen& currentSceen)
 {
-	srand(NULL);
+	if (player.firstTime)
+	{
+		InitGame(player, ball, bricks);
+	}
 
-	slWindow(screenWidth, screenHeight, "Brick-Breaker", false);
-
-	Player player = Player();
-	Brick bricks[bricksQnty];
-	Ball ball = Ball();
-
-	InitGame(player, ball, bricks);
-
-	Loop(ball, player, bricks);
-
-	slClose();
+	GameLoop(player, ball, bricks, currentSceen);
 }

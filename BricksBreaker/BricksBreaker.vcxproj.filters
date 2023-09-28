@@ -30,6 +30,9 @@
     <ClCompile Include="GameData.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="MenuManager.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameData.h">
@@ -45,6 +48,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="ColissionManager.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

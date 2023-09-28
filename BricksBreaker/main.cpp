@@ -1,8 +1,8 @@
-#include "GameLoop.h"
+#include "MenuManager.h"
 
 
 
 void main()
 {
-	StartUp();
+	RunGame();
 }

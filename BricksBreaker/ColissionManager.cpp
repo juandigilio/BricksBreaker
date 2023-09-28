@@ -9,7 +9,7 @@
 using namespace Colission;
 using namespace Assets;
 
-void CheckWalls(Ball& ball, Player& player)
+void CheckWalls(Player& player, Ball& ball)
 {
 	if (ball.position.x + ball.radius > screenWidth)
 	{
@@ -35,6 +35,11 @@ void CheckWalls(Ball& ball, Player& player)
 		ball.isOut = true;
 		player.availableLives--;
 		slSoundPlay(missBall);
+
+		if (player.availableLives == 0)
+		{
+			player.isAlive = false;
+		}
 	}
 	else if (ball.position.y < -200)
 	{
@@ -43,11 +48,12 @@ void CheckWalls(Ball& ball, Player& player)
 		ball.position.y = player.position.y + ball.radius + (player.size.y / 2);
 		ball.speed.y *= -1.8f;
 		ball.speed.x = 0.0f;
+		slSoundStopAll();
+		slSoundPlay(ballStart);
 	}
-
 }
 
-void CheckPlayer(Ball& ball, Player& player, bool& collides)
+void CheckPlayer(Player& player, Ball& ball, bool& collides)
 {
 	pointsQnty = 100;
 	dyP1 = 0;
@@ -262,13 +268,13 @@ void CheckBricks(Ball& ball, Brick& brick, bool& collides)
 	}
 }
 
-void CheckColissions(Ball& ball, Player& player, Brick bricks[])
+void CheckColissions(Player& player, Ball& ball, Brick bricks[])
 {
 	bool collides = false;
 
-	CheckWalls(ball, player);
+	CheckWalls(player, ball);
 
-	CheckPlayer(ball, player, collides);
+	CheckPlayer(player, ball, collides);
 
 	for (int i = 0; i < bricksQnty; i++)
 	{
