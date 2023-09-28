@@ -3,7 +3,7 @@
 
 const int screenWidth = 1024;
 const int screenHeight = 768;
-const int bricksQnty = 200;
+const int bricksQnty = 156;
 
 struct Vector2
 {
@@ -56,6 +56,10 @@ namespace Assets
 	extern int brick3;
 	extern int brick4;
 	extern int brick5;
+	extern int acidBrick;
+	extern int iceBrick;
+	extern int bigBrick;
+	extern int stoneBrick;
 
 	extern int acidBrick;
 	extern int acidPosX;

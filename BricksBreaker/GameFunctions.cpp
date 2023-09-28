@@ -36,6 +36,7 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 	int iterator = 0;
 	float brickSizeX = 60;
 	float brickSizeY = 17;
+	int ran;
 
 	srand(NULL);
 
@@ -49,10 +50,14 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 			bricks[iterator].textureSize.y = brickSizeY;
 			bricks[iterator].position = position;
 			bricks[iterator].isAlive = true;
+			bricks[iterator].isAcid = false;
+			bricks[iterator].isIce = false;
+			bricks[iterator].isBig = false;
+			bricks[iterator].isStone = false;
 
 			position.x += bricks[iterator].size.x + 10.0f;
 
-			int ran = (rand() % 5) + 1;
+			ran = (rand() % 5) + 1;
 
 			switch (ran)
 			{
@@ -88,6 +93,39 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 
 		position.x = 90.0f;
 		position.y -= brickSizeY + 10.0f;
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		do
+		{
+			ran = (rand() % bricksQnty);
+
+		} while (bricks[ran].isAcid == true);
+
+		bricks[ran].isAcid = true;
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		do
+		{
+			ran = (rand() % bricksQnty);
+
+		} while (bricks[ran].isAcid == true || bricks[ran].isIce == true);
+
+		bricks[ran].isIce = true;
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		do
+		{
+			ran = (rand() % bricksQnty);
+
+		} while (bricks[ran].isAcid == true || bricks[ran].isIce == true || bricks[ran].isBig == true);
+
+		bricks[ran].isBig = true;
 	}
 }
 

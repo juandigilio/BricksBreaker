@@ -35,4 +35,8 @@ struct Brick
 	Vector2 textureSize;
 	int texture;
 	bool isAlive;
+	bool isAcid;
+	bool isIce;
+	bool isBig;
+	bool isStone;
 };

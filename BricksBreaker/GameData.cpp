@@ -36,6 +36,10 @@ namespace Assets
 	extern int brick3{};
 	extern int brick4{};
 	extern int brick5{};
+	extern int acidBrick{};
+	extern int iceBrick{};
+	extern int bigBrick{};
+	extern int stoneBrick{};
 
 	extern int acidBrick{};
 	extern int acidPosX{};
