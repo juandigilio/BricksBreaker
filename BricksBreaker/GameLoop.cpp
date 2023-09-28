@@ -7,6 +7,7 @@
 #include "GameFunctions.h"
 #include "ColissionManager.h"
 
+using namespace std;
 using namespace Assets;
 
 
@@ -66,7 +67,6 @@ void Draw(Player& player, Ball& ball, Brick bricks[])
 	{
 		if (bricks[i].isAlive)
 		{
-
 			slSprite(bricks[i].texture, bricks[i].position.x, bricks[i].position.y, bricks[i].textureSize.x, bricks[i].textureSize.y);
 		}
 	}

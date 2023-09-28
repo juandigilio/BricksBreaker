@@ -24,9 +24,9 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 	ball.radius = 8.0f;
 	ball.textureSize.x = ball.radius * 2;
 	ball.textureSize.y = ball.radius * 2;
-	ball.position = { screenWidth * 0.5f, 50.0f };
+	ball.position = { screenWidth /2, 80.0f };
 	ball.speed = { 250.0f, 250.0f };
-	ball.maxSpeed = 800.0f;
+	ball.maxSpeed = 700.0f;
 	ball.texture = Assets::ball;
 	ball.isAlive = true;
 	ball.isOut = false;
@@ -48,6 +48,7 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 			bricks[iterator].textureSize.x = brickSizeX;
 			bricks[iterator].textureSize.y = brickSizeY;
 			bricks[iterator].position = position;
+			bricks[iterator].isAlive = true;
 
 			position.x += bricks[iterator].size.x + 10.0f;
 
