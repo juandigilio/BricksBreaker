@@ -9,6 +9,7 @@
 
 using namespace std;
 using namespace Assets;
+using namespace Statics;
 
 
 void GetInput(Player& player, Ball& ball, Brick bricks[], GameSceen& currentSceen)

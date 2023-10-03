@@ -1,5 +1,16 @@
 #include "GameData.h"
 
+namespace Statics
+{
+	extern const int screenWidth = 1024;
+	extern const int screenHeight = 768;
+	extern int activeBricks = 0;
+	extern int acidStartPoint = 0;
+	extern int iceStartPoin = 0;
+	extern bool acidGame = false;
+	extern bool icedGame = false;
+}
+
 namespace Colission
 {
 	extern int pointsQnty{};
@@ -19,10 +30,9 @@ namespace Assets
 	extern int ballStart{};
 	extern int ballWall{};
 	extern int missBall{};
-	extern int powerUp{};
-	extern int rLaunch{};
-	extern int explosion{};
+	extern int iced{};
 	extern int danger{};
+	extern int bigPlayer{};
 
 	//Assets
 	extern int menuBackground{};
@@ -30,7 +40,7 @@ namespace Assets
 	extern int gameBackground{};
 	extern int player{};
 	extern int ball{};
-	
+
 	extern int brick1{};
 	extern int brick2{};
 	extern int brick3{};
@@ -41,16 +51,12 @@ namespace Assets
 	extern int bigBrick{};
 	extern int stoneBrick{};
 
-	extern int acidBrick{};
 	extern int acidPosX{};
 	extern int acidPosY{};
-	extern int iceBrick{};
 	extern int icePosX{};
 	extern int icePosY{};
-	extern int bigBrick{};
 	extern int bigPosX{};
 	extern int bigPosY{};
-	extern int stoneBrick{};
 	extern int stonePosX{};
 	extern int stonePosY{};
 
@@ -60,4 +66,4 @@ namespace Assets
 
 	//Fonts
 	extern int menuFont{};
-}
+};

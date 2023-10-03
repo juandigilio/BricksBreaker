@@ -8,6 +8,7 @@
 
 using namespace Colission;
 using namespace Assets;
+using namespace Statics;
 
 void CheckWalls(Player& player, Ball& ball)
 {
@@ -15,7 +16,6 @@ void CheckWalls(Player& player, Ball& ball)
 	{
 		ball.speed.x = (ball.speed.x * -1.0f);
 		ball.position.x = (screenWidth - ball.radius);
-		
 		slSoundPlay(ballWall);
 	}
 	else if (ball.position.x - ball.radius < 0.0f)
@@ -124,7 +124,12 @@ void CheckBricks(Ball& ball, Brick& brick, bool& collides)
 		if (hypotenuse <= ball.radius)
 		{
 			ball.speed.y *= - 1.0f;
-			brick.isAlive = false;
+
+			if (!brick.isStone)
+			{
+				brick.isAlive = false;
+			}
+
 			collides = true;
 			ball.position.y = brick.position.y - (brick.size.y / 2) - ball.radius;
 
@@ -268,6 +273,35 @@ void CheckBricks(Ball& ball, Brick& brick, bool& collides)
 	}
 }
 
+void CheckPowerUps(Brick brick)
+{
+	if (brick.isAcid)
+	{
+		slSoundLoop(danger);
+		acidStartPoint = slGetTime();
+		acidGame = true;
+	}
+	else if (brick.isIce)
+	{
+		slSoundPlay(iced);
+		iceStartPoin = slGetTime();
+		icedGame = true;
+	}
+	else if (brick.isBig)
+	{
+		slSoundPlay(iced);
+		bigPlayer = true;
+	}
+	else if (brick.isStone)
+	{
+		slSoundPlay(ballWall);
+	}
+	else
+	{
+		slSoundPlay(ballBrick);
+	}
+}
+
 void CheckColissions(Player& player, Ball& ball, Brick bricks[])
 {
 	bool collides = false;
@@ -284,7 +318,7 @@ void CheckColissions(Player& player, Ball& ball, Brick bricks[])
 
 			if (collides)
 			{
-				slSoundPlay(ballBrick);
+				CheckPowerUps(bricks[i]);
 				break;
 			}
 		}

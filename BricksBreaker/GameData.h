@@ -1,9 +1,7 @@
 #pragma once
 
-
-const int screenWidth = 1024;
-const int screenHeight = 768;
 const int bricksQnty = 156;
+
 
 struct Vector2
 {
@@ -19,6 +17,17 @@ enum GameSceen
 	CREDITS,
 	EXIT,
 };
+
+namespace Statics
+{
+	extern const int screenWidth;
+	extern const int screenHeight;
+	extern int activeBricks;
+	extern int acidStartPoint;
+	extern int iceStartPoin;
+	extern bool acidGame;
+	extern bool icedGame;
+}
 
 namespace Colission
 {
@@ -39,10 +48,9 @@ namespace Assets
 	extern int ballStart;
 	extern int ballWall;
 	extern int missBall;
-	extern int powerUp;
-	extern int rLaunch;
-	extern int explosion;
+	extern int iced;
 	extern int danger;
+	extern int bigPlayer;
 
 	//textures
 	extern int menuBackground;
@@ -61,16 +69,12 @@ namespace Assets
 	extern int bigBrick;
 	extern int stoneBrick;
 
-	extern int acidBrick;
 	extern int acidPosX;
 	extern int acidPosY;
-	extern int iceBrick;
 	extern int icePosX;
 	extern int icePosY;
-	extern int bigBrick;
 	extern int bigPosX;
 	extern int bigPosY;
-	extern int stoneBrick;
 	extern int stonePosX;
 	extern int stonePosY;
 
@@ -79,5 +83,5 @@ namespace Assets
 
 	//Fonts
 	extern int menuFont;
-}
+};
 

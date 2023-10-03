@@ -10,6 +10,7 @@
 
 using namespace std;
 using namespace Assets;
+using namespace Statics;
 
 void InitMenu()
 {
@@ -163,7 +164,6 @@ void ShowCredits(GameSceen& currentSceen)
 
 void RunGame()
 {
-
 	GameSceen currentSceen = MENU;
 	Player player = Player();
 	Brick bricks[bricksQnty];
