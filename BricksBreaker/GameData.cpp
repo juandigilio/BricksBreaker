@@ -6,6 +6,7 @@ namespace Statics
 	extern const int screenHeight = 768;
 	extern int activeBricks = 0;
 	extern int acidStartPoint = 0;
+	extern int acidLastDrop = 0;
 	extern int iceStartPoin = 0;
 	extern bool acidGame = false;
 	extern bool icedGame = false;
@@ -39,6 +40,7 @@ namespace Assets
 
 	extern int gameBackground{};
 	extern int player{};
+	extern int playerEnd{};
 	extern int ball{};
 
 	extern int brick1{};

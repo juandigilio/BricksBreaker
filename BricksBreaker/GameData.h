@@ -25,6 +25,7 @@ namespace Statics
 	extern int activeBricks;
 	extern int acidStartPoint;
 	extern int iceStartPoin;
+	extern int acidLastDrop;
 	extern bool acidGame;
 	extern bool icedGame;
 }
@@ -57,6 +58,7 @@ namespace Assets
 
 	extern int gameBackground;
 	extern int player;
+	extern int playerEnd;
 	extern int ball;
 
 	extern int brick1;

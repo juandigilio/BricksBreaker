@@ -13,8 +13,8 @@ using namespace Statics;
 void SetEntities(Player& player, Ball& ball, Brick bricks[])
 {
 	player.size = { 100.0f, 100.0f };
-	player.textureSize = { player.size.x , -player.size.y };
-	player.position = { screenWidth * 0.5f, 0.0f };
+	player.textureSize = { player.size.x , player.size.y };
+	player.position = { screenWidth * 0.5f, -30.0f };
 	player.availableLives = 3;
 	player.points = 0;
 	player.speed = { 0.0f, 0.0f };
@@ -162,6 +162,7 @@ void LoadAssets()
 	
 	gameBackground = slLoadTexture("../Assets/Images/gameBackground.png");
 	player = slLoadTexture("../Assets/Images/Ship.png");
+	playerEnd = slLoadTexture("../Assets/Images/ShipEnd.png");
 	ball = slLoadTexture("../Assets/Images/Enemy.png");
 
 	brick1 = slLoadTexture("../Assets/Images/brick1.png");
