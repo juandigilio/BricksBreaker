@@ -10,7 +10,7 @@
 
 using namespace std;
 using namespace Assets;
-using namespace Statics;
+using namespace Globals;
 
 void InitMenu()
 {
@@ -165,9 +165,10 @@ void ShowCredits(GameSceen& currentSceen)
 void RunGame()
 {
 	GameSceen currentSceen = MENU;
-	Player player = Player();
+	Player player;
 	Brick bricks[bricksQnty];
-	Ball ball = Ball();
+	Brick acidBricks[18];
+	Ball ball;
 
 	slWindow(screenWidth, screenHeight, "Brick-Breaker", false);
 
@@ -184,7 +185,7 @@ void RunGame()
 		}
 		case GAME:
 		{
-			Play(player, ball, bricks, currentSceen);
+			Play(player, ball, bricks, acidBricks, currentSceen);
 			break;
 		}
 		case INSTRUCTIONS:

@@ -9,7 +9,7 @@
 
 using namespace std;
 using namespace Assets;
-using namespace Statics;
+using namespace Globals;
 
 
 void GetInput(Player& player, Ball& ball, Brick bricks[], GameSceen& currentSceen)
@@ -22,10 +22,10 @@ void GetInput(Player& player, Ball& ball, Brick bricks[], GameSceen& currentScee
 	{
 		player.speed.x = 500.0f;
 	}
-	else if (slGetKey(SL_KEY_TAB))
+	/*else if (slGetKey(SL_KEY_TAB))
 	{
 		player.textureSize.y++;
-	}
+	}*/
 	else if (slGetKey(SL_KEY_ESCAPE))
 	{
 		currentSceen = MENU;
@@ -33,12 +33,6 @@ void GetInput(Player& player, Ball& ball, Brick bricks[], GameSceen& currentScee
 	else
 	{
 		player.speed.x = 0.0f;
-	}
-
-	if (!player.isAlive)
-	{
-		InitGame(player, ball, bricks);
-		currentSceen = MENU;
 	}
 }
 
@@ -77,6 +71,24 @@ void Draw(Player& player, Ball& ball, Brick bricks[])
 	slSprite(player.texture, player.position.x, player.position.y, player.textureSize.x, player.textureSize.y);
 }
 
+void UpdateAcid(Player& player, Brick bricks[])
+{
+	int elapsedTimeFromLast = slGetTime() - acidLastDrop;
+
+	if (acidGame)
+	{
+		if (elapsedTimeFromLast > 2)
+		{
+			
+		}
+	}
+}
+
+void UpdatePowerUps()
+{
+
+}
+
 void Update(Player& player, Ball& ball, Brick bricks[])
 {
 	if (player.firstTime)
@@ -90,8 +102,14 @@ void Update(Player& player, Ball& ball, Brick bricks[])
 	MoveEntities(player, ball);
 }
 
-void GameLoop(Player& player, Ball& ball, Brick bricks[], GameSceen& currentSceen)
+void GameLoop(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[], GameSceen& currentSceen)
 {	
+	if (!player.isAlive)
+	{
+		InitGame(player, ball, bricks, acidBricks);
+		currentSceen = MENU;
+	}
+
 	GetInput(player, ball, bricks, currentSceen);
 
 	Update(player, ball, bricks);
@@ -99,12 +117,12 @@ void GameLoop(Player& player, Ball& ball, Brick bricks[], GameSceen& currentScee
 	Draw(player, ball, bricks);	
 }
 
-void Play(Player& player, Ball& ball, Brick bricks[], GameSceen& currentSceen)
+void Play(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[], GameSceen& currentSceen)
 {
 	if (player.firstTime)
 	{
-		InitGame(player, ball, bricks);
+		InitGame(player, ball, bricks, acidBricks);
 	}
 
-	GameLoop(player, ball, bricks, currentSceen);
+	GameLoop(player, ball, bricks, acidBricks, currentSceen);
 }

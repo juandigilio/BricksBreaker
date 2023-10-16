@@ -8,9 +8,9 @@
 
 
 using namespace Assets;
-using namespace Statics;
+using namespace Globals;
 
-void SetEntities(Player& player, Ball& ball, Brick bricks[])
+void SetEntities(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
 {
 	player.size = { 100.0f, 100.0f };
 	player.textureSize = { player.size.x , player.size.y };
@@ -32,18 +32,20 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 	ball.isAlive = true;
 	ball.isOut = false;
 
-
+	
 	Vector2 position = { 90.0f, screenHeight - 50.0f };
 	int iterator = 0;
-	float brickSizeX = 60;
-	float brickSizeY = 17;
+	float brickSizeX = 80;
+	float brickSizeY = 23;
 	int ran;
 
 	srand(time(NULL));
 
-	for (int i = 0; i < 12; i++)
+	activeBricks = 0;
+
+	for (int i = 0; i < 8; i++)
 	{
-		for (int j = 0; j < 13; j++)
+		for (int j = 0; j < 10; j++)
 		{
 			bricks[activeBricks].size.x = brickSizeX;
 			bricks[activeBricks].size.y = brickSizeY;
@@ -62,31 +64,31 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 
 			switch (ran)
 			{
-				case 1:
-				{
-					bricks[activeBricks].texture = brick1;
-					break;
-				}
-				case 2:
-				{
-					bricks[activeBricks].texture = brick2;
-					break;
-				}
-				case 3:
-				{
-					bricks[activeBricks].texture = brick3;
-					break;
-				}
-				case 4:
-				{
-					bricks[activeBricks].texture = brick4;
-					break;
-				}
-				case 5:
-				{
-					bricks[activeBricks].texture = brick5;
-					break;
-				}
+			case 1:
+			{
+				bricks[activeBricks].texture = brick1;
+				break;
+			}
+			case 2:
+			{
+				bricks[activeBricks].texture = brick2;
+				break;
+			}
+			case 3:
+			{
+				bricks[activeBricks].texture = brick3;
+				break;
+			}
+			case 4:
+			{
+				bricks[activeBricks].texture = brick4;
+				break;
+			}
+			case 5:
+			{
+				bricks[activeBricks].texture = brick5;
+				break;
+			}
 			}
 
 			activeBricks++;
@@ -96,7 +98,7 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 		position.y -= brickSizeY + 10.0f;
 	}
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		do
 		{
@@ -147,6 +149,16 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[])
 		bricks[ran].texture = stoneBrick;
 		activeBricks--;
 	}
+	
+	for (int i = 0; i < 6; i++)
+	{
+		acidBricks[i].texture = acidBrick; 
+		acidBricks[i].isAlive = false;
+		acidBricks[i].size.x = brickSizeX;
+		acidBricks[i].size.y = brickSizeY;
+		acidBricks[i].textureSize.x = brickSizeX;
+		acidBricks[i].textureSize.y = brickSizeY;
+	}
 }
 
 void LoadAssets()
@@ -176,9 +188,9 @@ void LoadAssets()
 	stoneBrick = slLoadTexture("../Assets/Images/stone.png");
 }
 
-void InitGame(Player& player, Ball& ball, Brick bricks[])
+void InitGame(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
 {
 	LoadAssets();
 
-	SetEntities(player, ball, bricks);
+	SetEntities(player, ball, bricks, acidBricks);
 }

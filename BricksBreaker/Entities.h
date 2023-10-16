@@ -39,6 +39,4 @@ struct Brick
 	bool isIce;
 	bool isBig;
 	bool isStone;
-
-	static int activeBricks;
 };

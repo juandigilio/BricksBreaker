@@ -8,7 +8,7 @@
 
 using namespace Colission;
 using namespace Assets;
-using namespace Statics;
+using namespace Globals;
 
 void CheckWalls(Player& player, Ball& ball)
 {
@@ -273,18 +273,18 @@ void CheckBricks(Ball& ball, Brick& brick, bool& collides)
 	}
 }
 
-void CheckPowerUps(Brick brick)
+static void CheckPowerUps(Brick brick)
 {
 	if (brick.isAcid)
 	{
 		slSoundLoop(danger);
-		acidStartPoint = slGetTime();
+		activeAcids += 6;
 		acidGame = true;
 	}
 	else if (brick.isIce)
 	{
 		slSoundPlay(iced);
-		iceStartPoin = slGetTime();
+		icedStartPoint = slGetTime();
 		icedGame = true;
 	}
 	else if (brick.isBig)

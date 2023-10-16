@@ -1,6 +1,6 @@
 #pragma once
 
-const int bricksQnty = 156;
+const int bricksQnty = 80;
 
 
 struct Vector2
@@ -18,14 +18,15 @@ enum GameSceen
 	EXIT,
 };
 
-namespace Statics
+namespace Globals
 {
 	extern const int screenWidth;
 	extern const int screenHeight;
 	extern int activeBricks;
-	extern int acidStartPoint;
-	extern int iceStartPoin;
+	extern int activeAcids;
+	extern int droppedAcids;
 	extern int acidLastDrop;
+	extern int icedStartPoint;
 	extern bool acidGame;
 	extern bool icedGame;
 }
