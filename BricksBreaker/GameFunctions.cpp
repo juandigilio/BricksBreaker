@@ -42,6 +42,7 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
 	srand(time(NULL));
 
 	activeBricks = 0;
+	droppedAcids = 0;
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -150,7 +151,7 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
 		activeBricks--;
 	}
 	
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < totalAcids; i++)
 	{
 		acidBricks[i].texture = acidBrick; 
 		acidBricks[i].isAlive = false;
@@ -158,7 +159,14 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
 		acidBricks[i].size.y = brickSizeY;
 		acidBricks[i].textureSize.x = brickSizeX;
 		acidBricks[i].textureSize.y = brickSizeY;
+		acidBricks[i].speed = 180.0f;
+		acidBricks[i].red = 1.0f;
+		acidBricks[i].green = 0.0f;
+		acidBricks[i].blue = 0.0f;
+		acidBricks[i].alpha = 1.0f;
+		acidBricks[i].isAlphaDown = true;
 	}
+
 }
 
 void LoadAssets()

@@ -1,6 +1,7 @@
 #pragma once
 
 const int bricksQnty = 80;
+const int totalAcids = 10;
 
 
 struct Vector2
@@ -9,7 +10,7 @@ struct Vector2
 	float y;
 };
 
-enum GameSceen
+enum class GameSceen
 {
 	MENU,
 	GAME,

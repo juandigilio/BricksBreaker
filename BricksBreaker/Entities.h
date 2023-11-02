@@ -33,7 +33,13 @@ struct Brick
 	Vector2 position;
 	Vector2 size;
 	Vector2 textureSize;
+	float speed;
+	float red;
+	float green;
+	float blue;
+	float alpha;
 	int texture;
+	bool isAlphaDown;
 	bool isAlive;
 	bool isAcid;
 	bool isIce;

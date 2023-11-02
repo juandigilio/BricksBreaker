@@ -74,7 +74,7 @@ void GetInput(GameSceen& currentSceen)
 
 		if (slGetMouseButton(SL_MOUSE_BUTTON_LEFT))
 		{
-			currentSceen = GAME;
+			currentSceen = GameSceen::GAME;
 		}
 	}
 	else if ((slGetMouseX() > stonePosX - menuSizeX / 2 && slGetMouseX() < stonePosX + menuSizeX / 2) &&
@@ -85,7 +85,7 @@ void GetInput(GameSceen& currentSceen)
 
 		if (slGetMouseButton(SL_MOUSE_BUTTON_LEFT))
 		{
-			currentSceen = EXIT;
+			currentSceen = GameSceen::EXIT;
 		}
 	}
 	else if ((slGetMouseX() > bigPosX - menuSizeX / 2 && slGetMouseX() < bigPosX + menuSizeX / 2) &&
@@ -96,7 +96,7 @@ void GetInput(GameSceen& currentSceen)
 
 		if (slGetMouseButton(SL_MOUSE_BUTTON_LEFT))
 		{
-			currentSceen = CREDITS;
+			currentSceen = GameSceen::CREDITS;
 		}
 	}
 	else if ((slGetMouseX() > icePosX - menuSizeX / 2 && slGetMouseX() < icePosX + menuSizeX / 2) &&
@@ -107,7 +107,7 @@ void GetInput(GameSceen& currentSceen)
 
 		if (slGetMouseButton(SL_MOUSE_BUTTON_LEFT))
 		{
-			currentSceen = INSTRUCTIONS;
+			currentSceen = GameSceen::INSTRUCTIONS;
 		}
 	}
 
@@ -136,20 +136,20 @@ void ShowInstructions(GameSceen& currentSceen)
 
 	if (slGetKey(SL_KEY_ESCAPE))
 	{
-		currentSceen = MENU;
+		currentSceen = GameSceen::MENU;
 	}
 }
 
 void ShowCredits(GameSceen& currentSceen)
 {
 	string credits = "Created by Juan Ignacio Digilio";
-	
+
 	slSprite(menuBackground, screenWidth / 2, screenHeight / 2, screenWidth * 1.2, screenHeight);
 
 	slSetForeColor(0.471f, 0.471f, 0.471f, 1.0f);
 
 	slSetFont(menuFont, 40);
-	slText((screenWidth / 2 ) - (credits.length() / 2), screenHeight / 2, "Created by Juan Ignacio Digilio");
+	slText((screenWidth / 2) - (credits.length() / 2), screenHeight / 2, "Created by Juan Ignacio Digilio");
 
 	slSetFont(menuFont, 14);
 	slText(screenWidth / 2, 25, "Image Campus student 1st year game development (Sigil evaluation)");
@@ -158,16 +158,16 @@ void ShowCredits(GameSceen& currentSceen)
 
 	if (slGetKey(SL_KEY_ESCAPE))
 	{
-		currentSceen = MENU;
+		currentSceen = GameSceen::MENU;
 	}
 }
 
 void RunGame()
 {
-	GameSceen currentSceen = MENU;
+	GameSceen currentSceen = GameSceen::MENU;
 	Player player;
 	Brick bricks[bricksQnty];
-	Brick acidBricks[18];
+	Brick acidBricks[totalAcids];
 	Ball ball;
 
 	slWindow(screenWidth, screenHeight, "Brick-Breaker", false);
@@ -178,27 +178,27 @@ void RunGame()
 	{
 		switch (currentSceen)
 		{
-		case MENU:
+		case GameSceen::MENU:
 		{
 			ShowMenu(currentSceen);
 			break;
 		}
-		case GAME:
+		case GameSceen::GAME:
 		{
 			Play(player, ball, bricks, acidBricks, currentSceen);
 			break;
 		}
-		case INSTRUCTIONS:
+		case GameSceen::INSTRUCTIONS:
 		{
 			ShowInstructions(currentSceen);
 			break;
 		}
-		case CREDITS:
+		case GameSceen::CREDITS:
 		{
 			ShowCredits(currentSceen);
 			break;
 		}
-		case EXIT:
+		case GameSceen::EXIT:
 		{
 			slClose();
 			break;
