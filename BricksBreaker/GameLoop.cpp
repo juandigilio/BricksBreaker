@@ -22,21 +22,17 @@ static void GetInput(Player& player, Ball& ball, Brick bricks[], GameSceen& curr
 	{
 		player.speed.x = 500.0f;
 	}
-	/*else if (slGetKey(SL_KEY_TAB))
-	{
-		player.textureSize.y++;
-	}*/
 	else if (slGetKey(SL_KEY_ESCAPE))
 	{
 		slSoundStopAll();
 		currentSceen = GameSceen::MENU;
 	}
-	else if (slGetKey(SL_KEY_BACKSPACE))
+	else if (slGetKey(SL_KEY_RIGHT_CONTROL) &&  ball.isStoped)
 	{
 		slSoundPlay(ballStart);
 		ball.isStoped = false;
 		ball.speed.x = 0.0f;
-		ball.speed.y = 1.8f;
+		ball.speed.y = 700.0f;
 	}
 	else
 	{
@@ -58,8 +54,15 @@ static void MoveEntities(Player& player, Ball& ball)
 		player.position.x = screenWidth - (player.size.x / 2.0f);
 	}
 
-	ball.position.x += ball.speed.x * static_cast<float>(slGetDeltaTime());
-	ball.position.y += ball.speed.y * static_cast<float>(slGetDeltaTime());
+	if (ball.isStoped)
+	{
+		ball.position.x = player.position.x;
+	}
+	else
+	{
+		ball.position.x += ball.speed.x * static_cast<float>(slGetDeltaTime());
+		ball.position.y += ball.speed.y * static_cast<float>(slGetDeltaTime());
+	}
 }
 
 static void Draw(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])

@@ -26,7 +26,7 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
 	ball.radius = 8.0f;
 	ball.textureSize.x = ball.radius * 2;
 	ball.textureSize.y = ball.radius * 2;
-	ball.position = { static_cast<float>(screenWidth / 2.0f), 80.0f };
+	ball.position = { static_cast<float>(screenWidth / 2.0f), 35.0f };
 	ball.speed = { 0.0f, 300.0f };
 	ball.maxSpeed = 700.0f;
 	ball.texture = Assets::ball;
