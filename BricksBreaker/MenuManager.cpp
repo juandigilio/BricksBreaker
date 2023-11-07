@@ -124,13 +124,18 @@ void ShowMenu(GameSceen& currentSceen)
 
 void ShowInstructions(GameSceen& currentSceen)
 {
+	slSetForeColor(1.0f, 1.0f, 1.0f, 0.5f);
 	slSprite(menuBackground, screenWidth / 2, screenHeight / 2, screenWidth * 1.2, screenHeight);
 
-	slSetForeColor(0.471f, 0.471f, 0.471f, 1.0f);
+	slSetForeColor(0.671f, 0.671f, 0.671f, 1.0f);
 
-	slSetFont(menuFont, 40);
-	slText(screenWidth / 2, (screenHeight / 6) * 3, "Use arrows to move");
-	slText(screenWidth / 2, (screenHeight / 6) * 4, "Press ESC to go back to the menu");
+	slSetFont(menuFont, 25);
+
+	slText(screenWidth / 2, static_cast<double>(600), "Use arrows to move");
+	slText(screenWidth / 2, static_cast<double>(500), "Use left CTRL to start the ball when stoped");
+	slText(screenWidth / 2, static_cast<double>(400), "If an acid brick hits you, you die,");
+	slText(screenWidth / 2, static_cast<double>(360), "but if you dodge it you earn 200pts for each one");
+	slText(screenWidth / 2, static_cast<double>(150), "Press ESC to go back to the menu");
 
 	slSetForeColor(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -142,23 +147,74 @@ void ShowInstructions(GameSceen& currentSceen)
 
 void ShowCredits(GameSceen& currentSceen)
 {
-	string credits = "Created by Juan Ignacio Digilio";
+	string credits = "Created by";
+	string credits2 = "Juan Ignacio Digilio";
+	string credits3 = "Image Campus student (Sigil evaluation)";
+	string credits4 = "1st year of video games development";
+	string itchio = "https://juandigilio.itch.io/";
+	string gitHub = "https://github.com/juandigilio";
+	double itchioPosX = static_cast<double>((screenWidth / 2) - (itchio.length() / 2));
+	double itchioPosY = static_cast<double>((screenHeight / 2) - 50);
+	double gitPosX = static_cast<double>((screenWidth / 2) - (gitHub.length() / 2));
+	double gitPosY = static_cast<double>((screenHeight / 2) - 70);;
+
+	slSetForeColor(1.0f, 1.0f, 1.0f, 0.5f);
 
 	slSprite(menuBackground, screenWidth / 2, screenHeight / 2, screenWidth * 1.2, screenHeight);
 
 	slSetForeColor(0.471f, 0.471f, 0.471f, 1.0f);
 
-	slSetFont(menuFont, 40);
-	slText((screenWidth / 2) - (credits.length() / 2), screenHeight / 2, "Created by Juan Ignacio Digilio");
+	slSetFont(menuFont, 35);
+	slText(static_cast<double>((screenWidth / 2) - (credits.length() / 2)), static_cast<double>((screenHeight / 2) + 50), "Created by");
+	slSetFont(menuFont, 55);
+	slText(static_cast<double>((screenWidth / 2) - (credits2.length() / 2)), static_cast<double>(screenHeight / 2), "Juan Ignacio Digilio");
 
 	slSetFont(menuFont, 14);
-	slText(screenWidth / 2, 25, "Image Campus student 1st year game development (Sigil evaluation)");
+	slText(static_cast<double>((screenWidth / 2) - (credits3.length() / 2)), static_cast<double>(50), "Image Campus student (Sigil evaluation)");
+	slText(static_cast<double>((screenWidth / 2) - (credits4.length() / 2)), static_cast<double>(20), "1st year of video games development");
+
+	slText(itchioPosX, itchioPosY, "https://juandigilio.itch.io/");
+	slText(gitPosX, gitPosY, "https://github.com/juandigilio");
 
 	slSetForeColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+	
 
 	if (slGetKey(SL_KEY_ESCAPE))
 	{
 		currentSceen = GameSceen::MENU;
+	}
+	else if ((slGetMouseX() > itchioPosX - 110 && slGetMouseX() < itchioPosX + 110) &&
+			(slGetMouseY() > itchioPosY && slGetMouseY() < itchioPosY + 14))
+	{
+		slSetForeColor(1.0f, 0.47f, 0.0f, 1.0f);
+		slText(itchioPosX, itchioPosY, "https://juandigilio.itch.io/");
+		slSetForeColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+		if (slGetMouseButton(SL_MOUSE_BUTTON_LEFT))
+		{
+			const char* url = "https://juandigilio.itch.io/";  // Cambia esta URL por la que desees abrir
+			char command[256];
+			snprintf(command, sizeof(command), "start %s", url);  // En sistemas Windows, usa "start" en lugar de "open"
+			system(command);
+		}
+		
+	}
+	else if ((slGetMouseX() > gitPosX - 130 && slGetMouseX() < gitPosX + 130) &&
+		(slGetMouseY() > gitPosY && slGetMouseY() < gitPosY + 14))
+	{
+		slSetForeColor(1.0f, 0.47f, 0.0f, 1.0f);
+		slText(gitPosX, gitPosY, "https://github.com/juandigilio");
+		slSetForeColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+		if (slGetMouseButton(SL_MOUSE_BUTTON_LEFT))
+		{
+			const char* url = "https://github.com/juandigilio";  // Cambia esta URL por la que desees abrir
+			char command[256];
+			snprintf(command, sizeof(command), "start %s", url);  // En sistemas Windows, usa "start" en lugar de "open"
+			system(command);
+		}
+
 	}
 }
 
