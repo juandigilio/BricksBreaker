@@ -65,6 +65,16 @@ static void MoveEntities(Player& player, Ball& ball)
 	}
 }
 
+static void DrawHUD(Player& player)
+{
+	slSetFont(menuFont, 20);
+
+	char numeroText[32];
+	snprintf(numeroText, sizeof(numeroText), "Points: %d", player.points);
+	slText(80, 10, numeroText);
+
+}
+
 static void Draw(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
 {
 	slSprite(gameBackground, static_cast<double>(screenWidth / 2), static_cast<double>(screenHeight / 2), static_cast<double>(screenWidth * 1.8f), static_cast<double>(screenHeight * 1.5f));
@@ -92,6 +102,8 @@ static void Draw(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
 	slSprite(ball.texture, ball.position.x, ball.position.y, ball.textureSize.x, ball.textureSize.y);
 	slSprite(player.texture, player.position.x, player.position.y, player.textureSize.x, player.textureSize.y);
 	slSprite(player.texture, player.position.x, player.position.y, player.textureSize.x, player.textureSize.y);
+
+	DrawHUD(player);
 }
 
 static bool StillAcidsAlive(Brick acidBricks[])
@@ -163,7 +175,7 @@ static void UpdateAcid(Player& player, Brick bricks[], Brick acidBricks[])
 			if (!StillAcidsAlive(acidBricks))
 			{
 				acidGame = false;
-				slSoundPause(danger);
+				slSoundStopAll();
 			}
 		}
 	}
@@ -175,11 +187,37 @@ static void UpdateIced()
 	{
 		float elapsedTime = static_cast<float>(slGetTime()) - icedStartPoint;
 
-		if (elapsedTime > 6.0f)
+		if (elapsedTime > 15.0f)
 		{
 			icedGame = false;
 		}
 	}
+}
+
+static void UpadteStoned(Brick bricks[])
+{
+	for (int i = 0; i < bricksQnty; i++)
+	{
+		if (bricks[i].isStone && bricks[i].availableLives == 1)
+		{
+			float elapsedTime = slGetTime() - bricks[i].lastUpdate;
+
+			if (elapsedTime > 0.2f)
+			{
+				bricks[i].stoneTexturePos++;
+
+				if (bricks[i].stoneTexturePos > 4)
+				{
+					bricks[i].stoneTexturePos = 1;
+				}
+
+				bricks[i].texture = stoneBrick[bricks[i].stoneTexturePos];
+
+				bricks[i].lastUpdate = slGetTime();
+			}
+		}
+	}
+
 }
 
 static void UpdatePowerUps(Player& player, Brick bricks[], Brick acidBricks[])
@@ -187,6 +225,8 @@ static void UpdatePowerUps(Player& player, Brick bricks[], Brick acidBricks[])
 	UpdateAcid(player, bricks, acidBricks);
 	
 	UpdateIced();
+
+	UpadteStoned(bricks);
 }
 
 static void Update(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])

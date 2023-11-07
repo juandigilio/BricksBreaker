@@ -18,7 +18,7 @@ void InitMenu()
 	acidBrick = slLoadTexture("../Assets/Images/acid.png");
 	iceBrick = slLoadTexture("../Assets/Images/ice.png");
 	bigBrick = slLoadTexture("../Assets/Images/big.png");
-	stoneBrick = slLoadTexture("../Assets/Images/stone.png");
+	stoneBrick[0] = slLoadTexture("../Assets/Images/stone.png");
 	
 	menuFont = slLoadFont("../Assets/Fonts/DelaGothic.ttf");
 
@@ -43,7 +43,7 @@ void Draw()
 	slSprite(acidBrick, acidPosX, acidPosY, menuSizeX, menuSizeY);
 	slSprite(iceBrick, icePosX, icePosY, menuSizeX, menuSizeY);
 	slSprite(bigBrick, bigPosX, bigPosY, menuSizeX, menuSizeY);
-	slSprite(stoneBrick, stonePosX, stonePosY, menuSizeX, menuSizeY);
+	slSprite(stoneBrick[0], stonePosX, stonePosY, menuSizeX, menuSizeY);
 
 	slSetForeColor(0.471f, 0.471f, 0.471f, 1.0f);
 
@@ -193,9 +193,9 @@ void ShowCredits(GameSceen& currentSceen)
 
 		if (slGetMouseButton(SL_MOUSE_BUTTON_LEFT))
 		{
-			const char* url = "https://juandigilio.itch.io/";  // Cambia esta URL por la que desees abrir
+			const char* url = "https://juandigilio.itch.io/";
 			char command[256];
-			snprintf(command, sizeof(command), "start %s", url);  // En sistemas Windows, usa "start" en lugar de "open"
+			snprintf(command, sizeof(command), "start %s", url);
 			system(command);
 		}
 		
@@ -209,9 +209,9 @@ void ShowCredits(GameSceen& currentSceen)
 
 		if (slGetMouseButton(SL_MOUSE_BUTTON_LEFT))
 		{
-			const char* url = "https://github.com/juandigilio";  // Cambia esta URL por la que desees abrir
+			const char* url = "https://github.com/juandigilio";
 			char command[256];
-			snprintf(command, sizeof(command), "start %s", url);  // En sistemas Windows, usa "start" en lugar de "open"
+			snprintf(command, sizeof(command), "start %s", url);
 			system(command);
 		}
 

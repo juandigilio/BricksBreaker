@@ -71,7 +71,7 @@ namespace Assets
 	extern int acidBrick;
 	extern int iceBrick;
 	extern int bigBrick;
-	extern int stoneBrick;
+	extern int stoneBrick[5];
 
 	extern int acidPosX;
 	extern int acidPosY;

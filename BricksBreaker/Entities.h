@@ -34,6 +34,9 @@ struct Brick
 	Vector2 position;
 	Vector2 size;
 	Vector2 textureSize;
+	int availableLives;
+	int stoneTexturePos;
+	float lastUpdate;
 	float speed;
 	float red;
 	float green;

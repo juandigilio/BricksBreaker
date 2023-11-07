@@ -60,6 +60,7 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
 			bricks[activeBricks].isIce = false;
 			bricks[activeBricks].isBig = false;
 			bricks[activeBricks].isStone = false;
+			bricks[activeBricks].availableLives = 0;
 
 			position.x += bricks[activeBricks].size.x + 10.0f;
 
@@ -149,7 +150,10 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
 		} while (bricks[ran].isAcid == true || bricks[ran].isIce == true || bricks[ran].isBig == true || bricks[ran].isStone == true);
 
 		bricks[ran].isStone = true;
-		bricks[ran].texture = stoneBrick;
+		bricks[ran].availableLives = 2;
+		bricks[ran].texture = stoneBrick[0];
+		bricks[ran].stoneTexturePos = 0;	
+		bricks[ran].lastUpdate = 0;	
 		activeBricks--;
 	}
 	
@@ -195,7 +199,11 @@ void LoadAssets()
 	acidBrick = slLoadTexture("../Assets/Images/acid.png");
 	iceBrick = slLoadTexture("../Assets/Images/ice.png");
 	bigBrick = slLoadTexture("../Assets/Images/big.png");
-	stoneBrick = slLoadTexture("../Assets/Images/stone.png");
+	stoneBrick[0] = slLoadTexture("../Assets/Images/stone.png");
+	stoneBrick[1] = slLoadTexture("../Assets/Images/stone1.png");
+	stoneBrick[2] = slLoadTexture("../Assets/Images/stone2.png");
+	stoneBrick[3] = slLoadTexture("../Assets/Images/stone3.png");
+	stoneBrick[4] = slLoadTexture("../Assets/Images/stone4.png");
 }
 
 void InitGame(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])

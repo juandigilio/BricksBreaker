@@ -18,6 +18,31 @@ static void KillAcids(Brick acidBricks[])
 	}
 }
 
+static void RandPowerUp(Brick& brick)
+{
+	switch (rand() % 3)
+	{
+		case 0:
+		{
+			brick.isAcid = true;
+			brick.texture = acidBrick;
+			break;
+		}
+		case 1:
+		{
+			brick.isIce = true;
+			brick.texture = iceBrick;
+			break;
+		}
+		case 2:
+		{
+			brick.isBig = true;
+			brick.texture = bigBrick;
+			break;
+		}
+	}
+}
+
 static void CheckWalls(Player& player, Ball& ball, Brick acidBricks[])
 {
 	if (ball.position.x + ball.radius > screenWidth)
@@ -132,12 +157,11 @@ static void CheckPlayer(Player& player, Ball& ball, bool& collides)
 	}
 }
 
-static void CheckBricks(Ball& ball, Brick& brick, bool& collides)
+static void CheckBricks(Player& player, Ball& ball, Brick& brick, bool& collides)
 {
 	pointsQnty = 100;
 	dyP1 = 0;
 	dxP1 = brick.size.x / (float)pointsQnty;
-
 
 	for (int i = 0; i <= pointsQnty; ++i)
 	{
@@ -155,8 +179,10 @@ static void CheckBricks(Ball& ball, Brick& brick, bool& collides)
 
 			if (!brick.isStone)
 			{
+				player.points += 20;
 				brick.isAlive = false;
 			}
+			
 
 			collides = true;
 			ball.position.y = brick.position.y - (brick.size.y / 2) - ball.radius;
@@ -213,8 +239,10 @@ static void CheckBricks(Ball& ball, Brick& brick, bool& collides)
 
 				if (!brick.isStone)
 				{
+					player.points += 20;
 					brick.isAlive = false;
 				}
+				
 
 				if (i < 10)
 				{
@@ -271,6 +299,7 @@ static void CheckBricks(Ball& ball, Brick& brick, bool& collides)
 
 				if (!brick.isStone)
 				{
+					player.points += 20;
 					brick.isAlive = false;
 				}
 
@@ -304,8 +333,10 @@ static void CheckBricks(Ball& ball, Brick& brick, bool& collides)
 
 				if (!brick.isStone)
 				{
+					player.points += 20;
 					brick.isAlive = false;
 				}
+				
 
 				break;
 			}
@@ -313,7 +344,7 @@ static void CheckBricks(Ball& ball, Brick& brick, bool& collides)
 	}
 }
 
-static void CheckPowerUps(Player& player, Brick brick)
+static void CheckPowerUps(Player& player, Brick& brick)
 {
 	if (brick.isAcid)
 	{
@@ -330,11 +361,20 @@ static void CheckPowerUps(Player& player, Brick brick)
 	else if (brick.isBig)
 	{
 		slSoundPlay(bigPlayer);
-		player.textureSize.x *= 2.0f;
+		player.textureSize.x = player.size.x * 2;
 	}
 	else if (brick.isStone)
 	{
 		slSoundPlay(ballWall);
+
+		brick.availableLives--;
+
+		if (brick.availableLives == 0)
+		{
+			brick.isStone = false;
+
+			RandPowerUp(brick);
+		}
 	}
 	else
 	{
@@ -378,6 +418,7 @@ static void CheckAcids(Player& player, Brick acidBricks[], Ball& ball)
 			if (collidesX && collidesY)
 			{
 				player.availableLives--;
+				slSoundStopAll();
 				slSoundPlay(missBall);
 
 				if (player.availableLives == 0)
@@ -403,7 +444,7 @@ static void CheckAcids(Player& player, Brick acidBricks[], Ball& ball)
 
 				break;
 			}
-			else if (acidBricks[i].position.y > screenHeight)
+			else if (acidBricks[i].position.y < -10.0f)
 			{
 				player.points += 200;
 				acidBricks[i].isAlive = false;
@@ -425,7 +466,7 @@ void CheckColissions(Player& player, Ball& ball, Brick bricks[], Brick acidBrick
 	{
 		if (bricks[i].isAlive)
 		{
-			CheckBricks(ball, bricks[i], collides);
+			CheckBricks(player, ball, bricks[i], collides);
 
 			if (collides)
 			{
