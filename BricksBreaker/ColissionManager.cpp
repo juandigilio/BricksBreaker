@@ -10,7 +10,15 @@ using namespace Colission;
 using namespace Assets;
 using namespace Globals;
 
-static void CheckWalls(Player& player, Ball& ball)
+static void KillAcids(Brick acidBricks[])
+{
+	for (int i = 0; i < totalAcids; i++)
+	{
+		acidBricks[i].isAlive = false;
+	}
+}
+
+static void CheckWalls(Player& player, Ball& ball, Brick acidBricks[])
 {
 	if (ball.position.x + ball.radius > screenWidth)
 	{
@@ -43,13 +51,17 @@ static void CheckWalls(Player& player, Ball& ball)
 	}
 	else if (ball.position.y < -200)
 	{
+		player.textureSize.x = player.size.x;
 		ball.isOut = false;
 		ball.position.x = player.position.x;
 		ball.position.y = player.position.y + ball.radius + (player.size.y / 2);
-		ball.speed.y *= -1.8f;
+		ball.speed.y *= 0.0f;
 		ball.speed.x = 0.0f;
+		ball.isStoped = true;
 		acidGame = false;
 		icedGame = false;
+
+		KillAcids(acidBricks);
 		slSoundStopAll();
 		slSoundPlay(ballStart);
 	}
@@ -64,8 +76,8 @@ static void CheckPlayer(Player& player, Ball& ball, bool& collides)
 
 	for (int i = 0; i <= pointsQnty; ++i)
 	{
-		y = player.position.y + (player.size.y / 2) + i * dyP1;
-		x = player.position.x - (player.size.x / 2) + i * dxP1;
+		y = player.position.y + (player.textureSize.y / 2) + i * dyP1;
+		x = player.position.x - (player.textureSize.x / 2) + i * dxP1;
 
 		hickX = abs(x - ball.position.x);
 		hickY = abs(y - ball.position.y);
@@ -76,31 +88,40 @@ static void CheckPlayer(Player& player, Ball& ball, bool& collides)
 		{
 			collides = true;
 
-			ball.position.y = (player.position.y + (player.size.y / 2) + ball.radius);
+			ball.position.y = (player.position.y + (player.textureSize.y / 2) + ball.radius);
 
-			if (i < 50)
+			if (icedGame)
 			{
-				i = 50 - i;
-				ball.speed.x = -1.0f;
+				ball.isStoped = true;
+				ball.speed.x = 0.0f;
+				ball.speed.y = 0.0f;
 			}
 			else
 			{
-				i -= 50;
-				ball.speed.x = 1.0f;
-			}
+				if (i < 50)
+				{
+					i = 50 - i;
+					ball.speed.x = -1.0f;
+				}
+				else
+				{
+					i -= 50;
+					ball.speed.x = 1.0f;
+				}
 
-			if (i < 10)
-			{
-				i = 10;
-			}
-			else if (i > 40)
-			{
-				i = 40;
-			}
+				if (i < 10)
+				{
+					i = 10;
+				}
+				else if (i > 40)
+				{
+					i = 40;
+				}
 
-			ball.speed.x = ((ball.maxSpeed / 50) * i) * ball.speed.x;
-			ball.speed.y = ball.maxSpeed - (ball.maxSpeed / 50) * i;
-
+				ball.speed.x = ((ball.maxSpeed / 50) * i) * ball.speed.x;
+				ball.speed.y = ball.maxSpeed - (ball.maxSpeed / 50) * i;
+			}
+			
 			break;
 		}		
 	}
@@ -275,7 +296,7 @@ static void CheckBricks(Ball& ball, Brick& brick, bool& collides)
 	}
 }
 
-static void CheckPowerUps(Brick brick)
+static void CheckPowerUps(Player& player, Brick brick)
 {
 	if (brick.isAcid)
 	{
@@ -291,8 +312,8 @@ static void CheckPowerUps(Brick brick)
 	}
 	else if (brick.isBig)
 	{
-		slSoundPlay(iced);
-		bigPlayer = true;
+		slSoundPlay(bigPlayer);
+		player.textureSize.x *= 2.0f;
 	}
 	else if (brick.isStone)
 	{
@@ -308,37 +329,45 @@ static void CheckAcids(Player& player, Brick acidBricks[], Ball& ball)
 {
 	for (int i = 0; i < totalAcids; i++)
 	{
-		bool collisionX = player.position.x - (player.size.x / 2) < acidBricks[i].position.x + (acidBricks[i].size.x / 2) && player.position.x + (player.size.x / 2) > acidBricks[i].position.x - (acidBricks[i].size.x / 2);
-		bool collisionY = player.position.y - (player.size.y / 2) < acidBricks[i].position.y + (acidBricks[i].size.y / 2) && player.position.y + (player.size.y / 2) > acidBricks[i].position.y - (acidBricks[i].size.y / 2);
+		if (acidBricks[i].isAlive)
+		{
+			bool collisionX = player.position.x - (player.size.x / 2) < acidBricks[i].position.x + (acidBricks[i].size.x / 2) && player.position.x + (player.size.x / 2) > acidBricks[i].position.x - (acidBricks[i].size.x / 2);
+			bool collisionY = player.position.y - (player.size.y / 2) < acidBricks[i].position.y + (acidBricks[i].size.y / 2) && player.position.y + (player.size.y / 2) > acidBricks[i].position.y - (acidBricks[i].size.y / 2);
+
+			if (collisionX && collisionY)
+			{
+				player.availableLives--;
+				slSoundPlay(missBall);
+
+				if (player.availableLives == 0)
+				{
+					player.isAlive = false;
+				}
+				else
+				{
+					player.textureSize.x = player.size.x;
+					ball.position.x = player.position.x;
+					ball.position.y = player.position.y + ball.radius + (player.size.y / 2);
+					ball.speed.y *= -1.8f;
+					ball.speed.x = 0.0f;
+					acidGame = false;
+					icedGame = false;
+
+					KillAcids(acidBricks);
+
+					slSoundStopAll();
+					slSoundPlay(ballStart);
+				}
+
+				break;
+			}
+			else if (acidBricks[i].position.y > screenHeight)
+			{
+				player.points += 200;
+				acidBricks[i].isAlive = false;
+			}
+		}
 		
-		if (collisionX && collisionY)
-		{
-			player.availableLives--;
-			slSoundPlay(missBall);
-
-			if (player.availableLives == 0)
-			{
-				player.isAlive = false;
-			}
-			else
-			{
-				ball.position.x = player.position.x;
-				ball.position.y = player.position.y + ball.radius + (player.size.y / 2);
-				ball.speed.y *= -1.8f;
-				ball.speed.x = 0.0f;
-				acidGame = false;
-				icedGame = false;
-				slSoundStopAll();
-				slSoundPlay(ballStart);
-			}
-
-			break;
-		}
-		else if (acidBricks[i].position.y > screenHeight)
-		{
-			player.points += 200;
-			acidBricks[i].isAlive = false;
-		}
 	}
 }
 
@@ -346,7 +375,7 @@ void CheckColissions(Player& player, Ball& ball, Brick bricks[], Brick acidBrick
 {
 	bool collides = false;
 
-	CheckWalls(player, ball);
+	CheckWalls(player, ball, acidBricks);
 
 	CheckPlayer(player, ball, collides);
 
@@ -358,7 +387,7 @@ void CheckColissions(Player& player, Ball& ball, Brick bricks[], Brick acidBrick
 
 			if (collides)
 			{
-				CheckPowerUps(bricks[i]);
+				CheckPowerUps(player, bricks[i]);
 				break;
 			}
 		}

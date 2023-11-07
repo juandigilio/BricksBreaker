@@ -14,23 +14,25 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
 {
 	player.size = { 100.0f, 100.0f };
 	player.textureSize = { player.size.x , player.size.y };
-	player.position = { screenWidth * 0.5f, -30.0f };
+	player.position = { screenWidth * 0.5f, -player.size.y / 4.0f };
 	player.availableLives = 3;
 	player.points = 0;
 	player.speed = { 0.0f, 0.0f };
 	player.texture = Assets::player;
 	player.isAlive = true;
+	player.firstTime = true;
 
 
 	ball.radius = 8.0f;
 	ball.textureSize.x = ball.radius * 2;
 	ball.textureSize.y = ball.radius * 2;
-	ball.position = { (float)screenWidth /2, 80.0f };
-	ball.speed = { 250.0f, 250.0f };
+	ball.position = { static_cast<float>(screenWidth / 2.0f), 80.0f };
+	ball.speed = { 0.0f, 300.0f };
 	ball.maxSpeed = 700.0f;
 	ball.texture = Assets::ball;
 	ball.isAlive = true;
 	ball.isOut = false;
+	ball.isStoped = true;
 
 	
 	Vector2 position = { 90.0f, screenHeight - 50.0f };

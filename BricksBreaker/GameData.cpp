@@ -7,8 +7,8 @@ namespace Globals
 	extern int activeBricks = 0;
 	extern int activeAcids = 0;
 	extern int droppedAcids = 0;
-	extern int acidLastDrop = 0;
-	extern int icedStartPoint = 0;
+	extern float acidLastDrop = 0.0f;
+	extern float icedStartPoint = 0.0f;
 	extern bool acidGame = false;
 	extern bool icedGame = false;
 }

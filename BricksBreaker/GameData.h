@@ -26,8 +26,8 @@ namespace Globals
 	extern int activeBricks;
 	extern int activeAcids;
 	extern int droppedAcids;
-	extern int acidLastDrop;
-	extern int icedStartPoint;
+	extern float acidLastDrop;
+	extern float icedStartPoint;
 	extern bool acidGame;
 	extern bool icedGame;
 }

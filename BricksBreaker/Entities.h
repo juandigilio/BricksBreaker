@@ -13,7 +13,7 @@ struct Player
 	int points;
 	int ammo;
 	bool isAlive;
-	bool firstTime = true;
+	bool firstTime;
 };
 
 struct Ball
@@ -26,6 +26,7 @@ struct Ball
 	float maxSpeed;
 	bool isAlive;
 	bool isOut;
+	bool isStoped;
 };
 
 struct Brick
