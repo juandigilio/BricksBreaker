@@ -13,7 +13,7 @@ struct Player
 	int points;
 	int ammo;
 	bool isAlive;
-	bool firstTime;
+	bool firstTime = true;
 };
 
 struct Ball

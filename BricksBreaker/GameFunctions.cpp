@@ -10,7 +10,7 @@
 using namespace Assets;
 using namespace Globals;
 
-void SetEntities(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
+static void SetEntities(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
 {
 	player.size = { 100.0f, 100.0f };
 	player.textureSize = { player.size.x , player.size.y };
@@ -20,7 +20,6 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
 	player.speed = { 0.0f, 0.0f };
 	player.texture = Assets::player;
 	player.isAlive = true;
-	player.firstTime = true;
 
 
 	ball.radius = 8.0f;
@@ -175,7 +174,7 @@ void SetEntities(Player& player, Ball& ball, Brick bricks[], Brick acidBricks[])
 
 }
 
-void LoadAssets()
+static void LoadAssets()
 {
 	ballBrick = slLoadWAV("../Assets/Music/ballBrick.wav");
 	ballStart = slLoadWAV("../Assets/Music/ballStart.wav");

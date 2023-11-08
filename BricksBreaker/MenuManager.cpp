@@ -221,10 +221,10 @@ void ShowCredits(GameSceen& currentSceen)
 void RunGame()
 {
 	GameSceen currentSceen = GameSceen::MENU;
-	Player player;
+	Player player{};
 	Brick bricks[bricksQnty];
 	Brick acidBricks[totalAcids];
-	Ball ball;
+	Ball ball{};
 
 	slWindow(screenWidth, screenHeight, "Brick-Breaker", false);
 
