@@ -392,19 +392,19 @@ static void CheckAcids(Player& player, Brick acidBricks[], Ball& ball)
 			bool collidesY = false;
 
 			Vector2 vertex[4];
-			vertex[0] = { player.position.x - (player.textureSize.x / 2), player.position.y };
-			vertex[1] = { player.position.x + (player.textureSize.x / 2), player.position.y };
+			vertex[0] = { player.position.x - (player.textureSize.x / 2), player.position.y - (player.textureSize.y / 2) };
+			vertex[1] = { player.position.x + (player.textureSize.x / 2), player.position.y - (player.textureSize.y / 2) };
 			vertex[2] = { player.position.x - (player.textureSize.x / 2), player.position.y + (player.textureSize.y / 2) };
 			vertex[3] = { player.position.x + (player.textureSize.x / 2), player.position.y + (player.textureSize.y / 2) };
 			
 			for (int j = 0; j < 4; j++)
 			{
-				if (vertex[j].x > (acidBricks[i].position.x - acidBricks[i].textureSize.x) && vertex[j].x < (acidBricks[i].position.x + acidBricks[i].textureSize.x))
+				if (vertex[j].x > (acidBricks[i].position.x - acidBricks[i].textureSize.x / 2) && vertex[j].x < (acidBricks[i].position.x + acidBricks[i].textureSize.x / 2))
 				{
 					collidesX = true;
 				}
 
-				if (vertex[j].y > (acidBricks[i].position.y - acidBricks[i].textureSize.y) && vertex[j].y < (acidBricks[i].position.y + acidBricks[i].textureSize.y))
+				if (vertex[j].y > (acidBricks[i].position.y - acidBricks[i].textureSize.y / 2) && vertex[j].y < (acidBricks[i].position.y + acidBricks[i].textureSize.y / 2))
 				{
 					collidesY = true;
 				}
